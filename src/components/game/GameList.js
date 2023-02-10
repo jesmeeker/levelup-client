@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from "react"
-import { getGames } from "../../managers/GameManagers"
+import { useNavigate } from "react-router-dom"
+import { getGames } from "../../managers/GameManager.js"
+import "./game.css"
 
 export const GameList = (props) => {
     const [ games, setGames ] = useState([])
+    const navigate = useNavigate()
 
     useEffect(() => {
         getGames().then(data => setGames(data))
@@ -10,6 +13,11 @@ export const GameList = (props) => {
 
     return (
         <article className="games">
+            <button className="btn btn-2 icon-create"
+                onClick={() => {
+                    navigate({ pathname: "new" })
+                }}
+            >Register New Game</button>
             {
                 games.map(game => {
                     return <section key={`game--${game.id}`} className="game">
