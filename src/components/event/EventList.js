@@ -23,11 +23,16 @@ export const EventList = (props) => {
             {
                 events.map(event => {
                     return <section key={`event--${event.id}`} className="event">
-
                         <div className="event__game">WHAT: {event.game.name}</div>
                         <div className="event__date">WHEN: <HumanDate date={event.date_of_event}/> at <HumanTime time={event.start_time}/></div>
                         <div className="event__location">WHERE: {event.location}</div>
                         <div className="event__host">Event Host: {event.host.full_name}</div>
+                        <div className="event__footer">
+                            <button
+                                onClick={() => {
+                                    navigate({ pathname: `edit/${event.id}`})
+                                }}>Edit</button>
+                        </div>
                     </section>
                 })
             }
