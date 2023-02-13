@@ -1,15 +1,34 @@
 import React, { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
-import { getGames } from "../../managers/GameManager.js"
+import { deleteGame, getGames } from "../../managers/GameManager.js"
 import "./game.css"
 
 export const GameList = (props) => {
-    const [ games, setGames ] = useState([])
+    const [ refresh, setRefresh ] = useState(true)
+    const [ games, setGames ] = useState([
+        {id: 0,
+        name: "",
+        description: "",
+        game_type: {},
+        min_player: 0,
+        max_player: 0,
+        gamer: {}
+        }
+    ]
+    )
     const navigate = useNavigate()
+
+    function refreshPage() {
+        window.location.reload(false)
+    }
 
     useEffect(() => {
         getGames().then(data => setGames(data))
-    }, [])
+    }, [,refresh])
+
+    const handleClick = (id) => {
+        deleteGame(id).then(refreshPage)
+    }   
 
     return (
         <article className="games">
@@ -29,6 +48,12 @@ export const GameList = (props) => {
                                 onClick={() => {
                                     navigate({ pathname: `edit/${game.id}`})
                                 }}>Edit</button>
+                        </div>
+                        <div className="game__footer">
+                            <button
+                                onClick={() => {
+                                    handleClick(game.id)
+                                }}>Delete</button>
                         </div>
                     </section>
                 })

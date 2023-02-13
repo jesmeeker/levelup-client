@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
-import { getEvents } from "../../managers/EventManager"
+import { deleteEvent, getEvents } from "../../managers/EventManager"
 import { HumanDate } from "../utils/HumanDate"
 import { HumanTime } from "../utils/HumanTime"
 import "./events.css"
@@ -12,6 +12,13 @@ export const EventList = (props) => {
     useEffect(() => {
         getEvents().then(data => setEvents(data))
     }, [])
+
+    const handleClick = (id) => {
+        deleteEvent(id)
+        .then(() => {
+            getEvents().then(data => setEvents(data))
+        })
+    }  
 
     return (
         <article className="events">
@@ -32,6 +39,10 @@ export const EventList = (props) => {
                                 onClick={() => {
                                     navigate({ pathname: `edit/${event.id}`})
                                 }}>Edit</button>
+                            <button
+                                onClick={() => {
+                                    handleClick(event.id)
+                                }}>Delete</button>
                         </div>
                     </section>
                 })

@@ -18,14 +18,18 @@ export const UpdateGame = () => {
         max_player: 0,
         description: "",
         name: "",
-        game_type: 0,
-        gamer: 0
+        game_type: {},
+        gamer: 0,
+        gameTypeId: 0
     })
 
     useEffect(() => {
         // TODO: Get the game types, then set the state
         getGameTypes().then(res => setGameTypes(res))
-        getGameById(gameId).then(res => setCurrentGame(res))
+        getGameById(gameId).then((res) => {
+            res.gameTypeId = res.game_type.id
+            setCurrentGame(res)
+        })
     }, [gameId])
 
     const changeGameState = (event) => {
@@ -77,10 +81,10 @@ export const UpdateGame = () => {
                         name="game_type"
                         required
                         className="form-control"
-                        value={currentGame.game_type.id}
+                        value={currentGame.gameTypeId}
                         onChange={(event) => {
                             const copy = { ...currentGame }
-                            copy.game_type = parseInt(event.target.value)
+                            copy.gameTypeId = parseInt(event.target.value)
                             setCurrentGame(copy)
                         }}>
                         {gameTypes.map(type => ( 
@@ -101,7 +105,7 @@ export const UpdateGame = () => {
                         max_player: parseInt(currentGame.max_player),
                         description: currentGame.description,
                         name: currentGame.name,
-                        game_type: currentGame.game_type,
+                        game_type: currentGame.gameTypeId,
                         gamer: currentGame.gamer.id
                     }
 
