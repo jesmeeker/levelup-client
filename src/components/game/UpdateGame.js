@@ -97,7 +97,6 @@ export const UpdateGame = () => {
 
             <button type="submit"
                 onClick={evt => {
-                    // Prevent form from being submitted
                     evt.preventDefault()
 
                     const game = {
