@@ -48,3 +48,26 @@ export const deleteEvent = (id) => {
         }
     })
 }
+
+export const leaveEvent = (id) => {
+    return fetch(`http://localhost:8000/events/${id}/leave`, 
+    {
+        method: "DELETE",
+        headers:{
+            "Authorization": `Token ${localStorage.getItem("lu_token")}`
+        }
+    })  
+}
+  
+  export const joinEvent = (id) => {
+    return fetch(`http://localhost:8000/events/${id}/signup`, {
+        method: "POST",
+        headers: {
+        "Authorization": `Token ${localStorage.getItem("lu_token")}`,
+        "Content-Type": "application/json",
+        "Accept": "application/json"
+        },
+        body: JSON.stringify(id)
+    })
+        .then(res => res.json())
+}
